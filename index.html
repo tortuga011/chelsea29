@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chelsea 29</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnE-1nPwT6BAloOYpBWtpauRvucL0erPA"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.1/TweenMax.min.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("div#barba-wrapper").niceScroll({cursorwidth: '0px', scrollspeed: 0 });
+    });
+    </script>
+</head>
+
+<body class="page-index">
+  <div id="header">
+    <div class="header">
+      <div id="threeLines">
+        <button id="toggle-nav" class="el"></button>
+      </div>
+      <div id="login"><a href="#">RESIDENT LOGIN</a></div>
+      <a href="#"><img src="./assets/img/login.svg" alt="Chelsea" id="login-icon"></a>
+      <ul id="menu" class="">
+        <li><a href="./index.html">Building</a></li>
+        <li><a href="./residences.html">Residences</a></li>
+        <li><a href="./amenities.html">Amenities</a></li>
+        <li><a href="./location.html">Location</a></li>
+        <li><a href="./availability.html">Availability</a></li>
+        <li><a href="#" class="toggle-form">Contact</a></li>
+        <li><a href="#" class="toggle-form">Apply</a></li>
+      </ul>
+      <div class="intro">
+        <p>Duis at tincidunt tortor. Nulla facilisi maximus ligula tortor, ac cursus nulla pulvinar in. Aliquam nulla orci, porttitor non cursus nulla pulvinar.</p>
+      </div>
+    </div>
+  </div>
+  <img src="./assets/img/logo.svg" alt="Chelsea" id="logo">
+   <div id="overlay"></div> 
+
+  <div class="container">
+    <div id="barba-wrapper">
+      <div class="barba-container">
+        <div class="row">
+          <div class="section-img gr-4 left-img">
+            <a href="#">
+                <img src="./assets/img/Hero.jpg" alt="Chelsea29">
+              </a>
+          </div>
+          <div class="section-img gr-8 right-img">
+            <a href="#">
+                <img src="./assets/img/Hero Copy.jpg" alt="Chelsea29">
+              </a>
+          </div>
+          <div class="section-img gr-12">
+            <a href="#">
+                <img src="./assets/img/terrace B.jpg" alt="Chelsea29">
+              </a>
+          </div>          
+          <div class="content-text even gr-4">
+            <h2 class="heading">Duis at tincidunt tortor</h2>
+            <p>
+              Aliquam felis turpis, dictum sed condimentum nec, pulvinar sed nulla. Cras sit amet mi fermentum tortor hendrerit scelerisque sed at arcu. Vestibulum ultrices sagittis neque efficitur tristique. Vivamus porttitor placerat nisi, nec ullamcorper sapien lacinia ut.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="footer-wrapper">
+        <img src="./assets/img/footer logo.png" alt="" class="footer-logo">
+        <p class="footer-text small-letters">Aliquam felis turpis, dictum sed condimentum nec, pulvinar sed nulla</p>
+      </div>
+    </div>
+  </div>
+  <div id="contact-form">
+    <div class="form-wrapper">
+      <h3>Sales gallery: 212-695-2929 </h3>
+      <form class="awesome-form" action="/action_page.php">
+        <div class="row p-b">
+          <div class="gr-6 input-group" style="padding-right: 10px;">
+            <input id="fname" type="text" name="firstname">
+            <label for="fname">First Name</label>
+          </div>
+          <div class="gr-6 input-group" style="padding-left: 10px;">
+            <input id="lname" type="text" name="lastname">
+            <label class="l-10" for="lname">Last Name</label>
+          </div>
+        </div>
+
+        <div class="row p-b">
+          <div class="gr-12 input-group">
+            <input type="e-mail" name="email">
+            <label class="e-mail_label" for="fname">E-mail</label>
+          </div>
+        </div>
+
+        <div class="row p-b">
+          <div class="gr-12 input-group">
+            <input type="comment" name="comment">
+            <label for="lname">Comments</label>
+          </div>
+        </div>
+
+        <div class="p-b">
+          <input type="submit" value="Submit" name="submit">
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="gr-12 stribling">
+          <img src="assets/img/footer logo.png" alt="">
+        </div>
+        <div class="gr-12 small-letters">
+          Equal Housing Opportunity <br>  
+  221 W29 Residential LLC c / o Ironstate Development, 50 Washington Street, <br>
+  Hoboken, NJ 07030. 
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div id="mobile-menu">
+      <ul>
+        <li><a href="./index.html" class="no-barba">Building</a></li>
+        <li><a href="./residences.html" class="no-barba">Residences</a></li>
+        <li><a href="./amenities.html" class="no-barba">Amenities</a></li>
+        <li><a href="./location.html" class="no-barba">Location</a></li>
+        <li><a href="./availability.html" class="no-barba">Availability</a></li>
+        <li><a href="./contact-page.html" class="no-barba">Contact</a></li>
+        <li><a href="#">Apply</a></li>
+      </ul>
+  </div>
+
+
+
+
+</body>
+
+</html>
