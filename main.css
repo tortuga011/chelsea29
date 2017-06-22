@@ -13927,13 +13927,13 @@ a {
 }
 
 .state-portrait .state-mobile .footer-wrapper {
-  padding: 0;
+  padding: 0 1rem;
   text-align: center
 }
 
 @media (orientation: portrait) {
   .state-mobile .footer-wrapper {
-    padding: 0;
+    padding: 0 1rem;
     text-align: center
   }
 }
