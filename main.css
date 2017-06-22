@@ -13955,7 +13955,7 @@ a {
 
 @media screen and (max-width: 767px) and (orientation: portrait) {
   .footer-wrapper {
-    padding: 0;
+    padding: 0 1rem;
     text-align: center
   }
 }
