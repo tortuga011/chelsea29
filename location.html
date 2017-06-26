@@ -35,8 +35,8 @@
       </ul>
       <div class="intro">
         <p>Duis at tincidunt tortor. Nulla facilisi maximus ligula tortor, ac cursus nulla pulvinar in. Aliquam nulla orci, porttitor non cursus nulla pulvinar.
-        </p>
         <a href="#" id="click-here">Click here</a>
+        </p>
       </div>
     </div>
   </div>
@@ -150,6 +150,520 @@
 
 
 
+
+<script>  
+  function startMap () {
+    var gMap = (function () {
+      var map;
+      var filters = {};
+      var kmlLayers = [];
+
+      function loadAll() {
+        $.each(filters, function (key, value) {
+          loadKmlLayer($(value).data('layerUrl'), map);
+        });
+      }
+
+      function setEvents() {
+        $(filters).on('click', function () {
+          clearPreviousLayers();
+          if (infoBubble2) {
+            infoBubble2.close();
+          }
+          loadKmlLayer($(this).data('layerUrl'), map);
+        });
+      }
+
+      function clearPreviousLayers() {
+        $.each(kmlLayers, function (key, value) {
+          value.layerInstance.setMap(null);
+        });
+      }
+
+      function loadKmlLayer(src, map) {
+        var kmlLayer = new google.maps.KmlLayer(src, {
+          suppressInfoWindows: true,
+          preserveViewport: true,
+          map: map
+        });
+
+        kmlLayers.push({
+          layerInstance: kmlLayer,
+          src: src
+        });
+
+        google.maps.event.addListener(kmlLayer, "click", openIW);
+
+        google.maps.event.addListener(map, "click", function () {
+          infoWindow.close();
+        });
+      }
+
+      var infoWindow = new google.maps.InfoWindow();
+      var infoBubble2 = new InfoBubble();
+
+      // Sve ispod mozes da menjas, ovo je html + inline stil (mora ovde da bude inline!) za infobubble. Gomilu stvari ne radi i gazi se, tako da mozes da pogledas da li ti treba ili ne, kao na primer ovaj font-size: futura-pt; ... to je iskopirano iz nekog projekta.
+
+      // Poenta je samo da ces stil i layout infobubblea sredjivati ovde
+
+      function openIW(KMLevent) {
+        infoBubble2.close();
+        var temp = KMLevent.featureData.infoWindowHtml.replace('font-family: "GalanoGrotesque-Regular" font-size:14px; color: #927f6c; text-transform: uppercase;')
+        var temp = temp.replace('<h3>', '<div>');
+        var temp = temp.replace('<br>', '');
+        var temp = temp.replace('<br>', '');
+        var temp = temp.replace('<table border="1">', '');
+        var res = temp.replace('</table>', '');
+        infoBubble2 = new InfoBubble({
+          map: map,
+          content: '<div class="phoneytext">' + res + '</div><div style="cursor: pointer; position: absolute; top: 0px; right: 0px; color: #927f6c; font-family: "GalanoGrotesque-Regular"; background-color: #fffbf1; width: 100%; height: inherit !important;><div class="closeIB" style="height: 20px; font-style: normal; text-align: right; text-transform: lowercase; font-size: 16px; padding: 1px 5px;">X</div> </div>',
+          position: KMLevent.latLng,
+          shadowStyle: 0,
+          padding: 5,
+          backgroundColor: '#fffbf1',
+          borderRadius: 0,
+          borderWidth: 0,
+          borderColor: '#927f6c',
+          disableAutoPan: true,
+          hideCloseButton: true,
+          backgroundClassName: 'phoney',
+          arrowStyle: 0,
+          color: '#927f6c',
+          font: 'GalanoGrotesque-Regular',
+          overflow: 'hidden',
+          minWidth: 100,
+          maxWidth: 300,
+          minHeight: 60,
+          //overflow: 'hidden',
+          arrowSize: 0
+        });
+        infoBubble2.open();
+        setTimeout(function () {
+          $('.closeIB').on('click', function () {
+            infoBubble2.close();
+          });
+        }, 1000);
+      }
+
+      var constructor = function Podcast(data) {
+        map = data.map;
+        filters = data.filters;
+        setEvents();
+      };
+
+      constructor.prototype.loadAll = loadAll;
+      constructor.prototype.infoWindow = infoWindow;
+
+      return constructor;
+    })();
+
+    // ovde ubacujes stilove za mapu
+
+  var styles =[
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#f4ece0"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#bdbdbd"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.locality",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.neighborhood",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#555555"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.neighborhood",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f4ecdf"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#818181"
+        },
+        {
+          "visibility": "on"
+        },
+        {
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#12031b"
+        },
+        {
+          "visibility": "off"
+        },
+        {
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f4ecdf"
+        },
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dadada"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#818181"
+        },
+        {
+          "visibility": "on"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#818181"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#818181"
+        },
+        {
+          "visibility": "on"
+        },
+        {
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#818181"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f4ecdf"
+        },
+        {
+          "visibility": "on"
+        },
+        {
+          "weight": 3.5
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#c9c9c9"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#909090"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#545454"
+        }
+      ]
+    }
+  ];
+
+    var center = new google.maps.LatLng(40.746500, -74.001374);
+
+    function initialize() {
+      // center - lokacija mape, zoom - ime samo kaze, level zooma, ove stvari mozes videti na dev sajtu google maps-a
+
+      if (document.getElementById('map')) {
+        window.map = new google.maps.Map(document.getElementById('map'), {
+          center: center,
+          zoom: 16,
+          mapTypeControl: false,
+          scrollwheel: false,
+          panControl: false
+        });
+
+        map.setOptions({
+          styles: styles
+        });
+
+        // u slucaju da zelis da menjas ime klase, menjas ga u html-u ali i ovde. dakle OVO JE KLASA ELEMENATA KOJI SADRZE DATA-URL-a KOJI VODI DO KML-ova
+
+        // primer tamo je
+
+        // <span data-layer-url="http://www.brandmama.com/500w/kml/parks.kml" class="filter-image-wrapper">Parking Garage</span>
+
+        // U ovom slucaju je apsolutna putanja ali moze da bude i relativna (sto kapiram da zelis - moraces sa ovime malo da se igras)
+
+        var gm = new gMap({
+          map: window.map,
+          filters: $('.filter-image-wrapper')
+        });
+
+        gm.loadAll();
+        // Isto vazi i za buildingImage, mozes da stavis relativnu putanju tipa ../img/buildingImage.png
+
+        var buildingImage = '../assets/img/building.png'; // url of building star
+        var buildingLatLng = center;
+        var buildingMarker = new google.maps.Marker({
+          position: buildingLatLng,
+          map: map,
+          icon: buildingImage
+        });
+      }
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    // map resize window 
+    google.maps.event.addDomListener(window, 'resize', function () {
+      map.setCenter(center);
+    });
+
+    return initialize()
+  }
+
+  startMap();
+</script>
 
 </body>
 
